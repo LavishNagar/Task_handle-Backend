@@ -60,10 +60,10 @@ exports.login=async (req,res)=>{
     try{
         //fetch data from req body
 
-        const {password,email}=req.body;
+        const {password,username}=req.body;
 
         //user enter data in the input boxes or not
-        if(!password || !email){
+        if(!password || !username){
             return res.status(401).json({
                 success:false,
                 message:"Fields are not entered, please enter all the fields carefully",
@@ -71,7 +71,7 @@ exports.login=async (req,res)=>{
         }
         //now search that user is present in the DB or not 
 
-        let user= await User.findOne({email});
+        let user= await User.findOne({username});
 
         if(!user){
             return res.status(200).json({

@@ -198,3 +198,25 @@ exports.getCmpTasks=async (req,res)=>{
         })
     }
 }
+
+exports.getInCmpTasks=async (req,res)=>{
+    try{
+        const {id}=req.headers;
+        const Data=await User.findById(id).populate({
+            path:"tasks",
+            match:{complete:false},
+            options:{sort:{createdAt:-1}},
+
+        })
+        const IncmpTaskData=Data.tasks;
+        res.status(200).json({
+            data:IncmpTaskData
+        })
+
+    }catch(error){
+        console.log(error);
+        res.status(400).json({
+            message:"Internal server error",
+        })
+    }
+}
